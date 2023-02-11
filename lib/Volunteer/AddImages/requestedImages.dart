@@ -1,5 +1,10 @@
 // ignore_for_file: camel_case_types
+import 'package:ayn3/firebase_storge_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../Gellery/Images.dart';
 import 'Add.dart';
@@ -12,11 +17,57 @@ class RequestedImage extends StatefulWidget {
 }
 
 class _RequestedImageState extends State<RequestedImage> {
-  List images = [
-    "asset/static/image2.png",
-    "asset/static/add.png",
-    "asset/static/add.png"
-  ];
+  List imagesID = [];
+  @override
+  void initState() {
+    getImages();
+    super.initState();
+  }
+
+  Future getImages() async {
+    await FirebaseFirestore.instance
+        .collection('User')
+        .doc('AI')
+        .collection("desc")
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        print(element.data().isEmpty);
+        if(element.data()['ListOfUser'].isEmpty){
+
+          setState(() {
+            imagesID.add(element);
+          });
+
+        }else {
+          print("hiiiiii2");
+          element['ListOfUser'].forEach((val) {
+            if (val['UserID'].contains(FirebaseAuth.instance.currentUser!.uid) && element.data()['ListOfUser'].isNotEmpty) {
+              return;
+            } else {
+              setState(() {
+                imagesID.add(element);
+              });
+            }
+          });
+        }
+
+
+      });
+
+      print(imagesID);
+    });
+
+// await FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection("desc").get().then(
+//             (SnapShot) => SnapShot.docs.forEach(
+//                     (doc) {
+//                       imagesID.add(doc.reference.id);
+//                       print(doc.reference.id);
+//                     }
+//
+//             ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,11 +94,13 @@ class _RequestedImageState extends State<RequestedImage> {
         SizedBox(
             height: 560,
             child: ListView.builder(
-                itemCount: images.length,
+                itemCount: imagesID.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
+                  print(index);
                   return AddPage(
-                    ImagePath: images[0],
+                    ImagePath: imagesID[index]['link'],
+                    id: imagesID[index]['id'],
                   );
                 })),
         const SizedBox(

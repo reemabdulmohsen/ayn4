@@ -1,8 +1,14 @@
 import 'package:ayn3/contsants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ayn3/Volunteer/dashboardV/homev.dart';
 
 class EditImage extends StatefulWidget {
-  const EditImage({super.key});
+  String ImagePath;
+  String desc;
+  String ID;
+  EditImage({super.key , required this.ImagePath , required this.desc , required this.ID});
 
   @override
   State<EditImage> createState() => _EditImageState();
@@ -12,6 +18,8 @@ class _EditImageState extends State<EditImage> {
   TextEditingController _textFieldController = TextEditingController();
   late String valueText;
   String codeDialog = "لا يوجد وصف";
+
+
   Future<void> EditDescription(BuildContext context) async {
     return showDialog(
         context: context,
@@ -39,6 +47,8 @@ class _EditImageState extends State<EditImage> {
                   style: TextStyle(fontFamily: "PNU", color: Colors.white),
                 ),
                 onPressed: () {
+                  print("ggggg");
+                  _updateDESC();
                   setState(() {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
@@ -107,15 +117,26 @@ class _EditImageState extends State<EditImage> {
   }
 
   @override
+  void initState() {
+    codeDialog = widget.desc;
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(
-              height: 60,
+              height: 50,
+            ), IconButton(
+              padding: EdgeInsets.only(right: 30),
+              alignment: Alignment.topRight,
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () => {Navigator.pop(context)},
             ),
             const Padding(
               padding: EdgeInsets.only(right: 20.0, top: 20),
@@ -140,7 +161,7 @@ class _EditImageState extends State<EditImage> {
                     Container(
                         height: 350,
                         width: 350,
-                        child: Image.asset("asset/static/image2.png")),
+                        child: Image.network(widget.ImagePath)),
                     Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: Container(
@@ -226,4 +247,15 @@ class _EditImageState extends State<EditImage> {
       )),
     );
   }
+  void _updateDESC() async {
+    print('******************');
+   await FirebaseFirestore.instance
+        .collection("User")
+        .doc(FirebaseAuth.instance.currentUser!.uid).collection('desc').doc(widget.ID)
+        .set(
+    {"desc":_textFieldController.text.trim() },SetOptions(merge: true));
+    homepagev.DescNum = homepagev.DescNum + 1;
+  }
 }
+
+

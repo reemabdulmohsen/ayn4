@@ -1,45 +1,36 @@
 // ignore_for_file: camel_case_types
-import 'package:ayn3/Volunteer/GetData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'ImageBox.dart';
 
-import 'Images.dart';
-
-class libraryPage extends StatefulWidget {
-  const libraryPage({super.key});
+class RatePage extends StatefulWidget {
+  const RatePage({super.key});
 
   @override
-  State<libraryPage> createState() => _libraryPagState();
+  State<RatePage> createState() => _RatePageState();
 }
 
-class _libraryPagState extends State<libraryPage> {
+class _RatePageState extends State<RatePage> {
 
 
   Future getImages() async {
-    final userid =  FirebaseAuth.instance.currentUser!.uid;
     QuerySnapshot qn = await FirebaseFirestore.instance
         .collection('User')
-        .doc(userid)
+        .doc('AI')
         .collection("desc").get();
-    return qn.docs;
+    return qn.docs;}
 
-
-
-
-
-  }
 
   @override
   Widget build(BuildContext context) {
-    print("hellooooo");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(
           height: 60,
         ),
+
         SizedBox(
             height: 100,
             child: Padding(
@@ -47,7 +38,7 @@ class _libraryPagState extends State<libraryPage> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: const <Widget>[
-                    Text("مكتبة الصور الخاصة",
+                    Text("تقييم الوصف الآلي",
                         textAlign: TextAlign.right,
                         style: TextStyle(
                             fontSize: 30,
@@ -67,9 +58,10 @@ class _libraryPagState extends State<libraryPage> {
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
                           return ImageDesc(
+                            ListOfRates: data[index]['ListOfRates'] ,
                             ImageID: data[index]['id'],
                             ImagePath: data[index]['link'],
-                              desc: data[index]['desc'],
+                            desc: data[index]['desc'],
 
                           );
                         });

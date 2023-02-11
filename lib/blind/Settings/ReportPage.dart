@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ayn3/blind/Settings/settings.dart';
 
+import '../../contsants.dart';
+
 class ReportPage extends StatefulWidget {
   @override
   State<ReportPage> createState() => ReportPageState();
@@ -12,24 +14,16 @@ class ReportPageState extends State<ReportPage> {
     return settingsPageState.indexSettings == 0
         ? settingsPage()
         : Container(
-            padding: EdgeInsets.all(25),
+            padding: EdgeInsets.only(top: 60, right: 20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            alignment: Alignment.topRight,
-                            primary: Colors.white,
-                            onPrimary: Colors.black,
-                            shadowColor: null,
-                            side: const BorderSide(
-                                color: Colors.white, width: 0)),
-                        onPressed: (() => setState(() {
-                              settingsPageState.indexSettings = 0;
-                            })),
-                        child: const Icon(Icons.arrow_back_ios)),
-                  ],
+                IconButton(
+                  alignment: Alignment.topRight,
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: (() => setState(() {
+                        settingsPageState.indexSettings = 0;
+                      })),
                 ),
                 Container(
                   alignment: Alignment.bottomRight,
@@ -43,10 +37,11 @@ class ReportPageState extends State<ReportPage> {
                     ),
                   ),
                 ),
-                Container(height: 30.0),
+                SizedBox(height: 30.0),
                 Container(
+
                   height: 150.0,
-                  width: 300.0,
+                  width: 10.0,
                   color: Colors.transparent,
                   child: Container(
                       decoration: BoxDecoration(
@@ -63,19 +58,31 @@ class ReportPageState extends State<ReportPage> {
                         ),
                       )),
                 ),
-                Container(height: 20.0),
-                ElevatedButton(
-                  onPressed: (() {}),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 65.0, vertical: 15.0),
-                    primary: Colors.blue,
-                    shape: const StadiumBorder(),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: 250,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    gradient: const LinearGradient(
+                      begin: Alignment(-0.95, 0.0),
+                      end: Alignment(1.0, 0.0),
+                      colors: [color_blue, color_purple],
+                      stops: [0.0, 1.0],
+                    ),
                   ),
-                  child: const Text(
-                    "إرسال",
-                    style: TextStyle(
-                        color: Colors.white, fontSize: 15, fontFamily: "PNU"),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                        shadowColor:
+                            MaterialStateProperty.all(Colors.transparent)),
+                    child: const Text(
+                      "طلب وصف",
+                      style: TextStyle(fontFamily: "PNU", color: Colors.white),
+                    ),
                   ),
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:ayn3/blind/Settings/settings.dart';
+import 'package:ayn3/blind/descPage.dart';
 import 'package:flutter/material.dart';
 
 class VoiceSett extends StatefulWidget {
@@ -42,7 +43,7 @@ class VoiceSettPage extends State<VoiceSett> {
                       fontSize: 30),
                 ),
                 const Text(
-                  "معدل مستوى الصوت",
+                  "معدل سرعة الصوت",
                   style: TextStyle(
                       fontFamily: "PNU",
                       fontWeight: FontWeight.bold,
@@ -53,21 +54,22 @@ class VoiceSettPage extends State<VoiceSett> {
                   children: [
                     Container(
                       height: 50,
-                      child: Icon(Icons.ac_unit),
+                      child: Icon(Icons.minimize_rounded),
                     ),
                     Slider(
-                      min: 0,
-                      max: 100,
-                      divisions: 2,
-                      label: '${_value.round()}',
-                      value: currentValue,
-                      onChanged: (value) {
-                        currentValue = value;
-                      },
+
+                        value: MyDescPage.volume,
+                        onChanged: (newVolume) {
+                          setState(() => MyDescPage.volume = newVolume);
+                        },
+                        min: 0.0,
+                        max: 1.0,
+                        divisions: 10,
+
                     ),
                     Container(
                       height: 40,
-                      child: Icon(Icons.ac_unit),
+                      child: Icon(Icons.add),
                     ),
                   ],
                 ),
@@ -85,7 +87,7 @@ class VoiceSettPage extends State<VoiceSett> {
                     Row(
                       children: [
                         Radio(
-                          value: 1,
+                          value: _value,
                           groupValue: _value,
                           onChanged: (value) {},
                           fillColor: MaterialStateColor.resolveWith(

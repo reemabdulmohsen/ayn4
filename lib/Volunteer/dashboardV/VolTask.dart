@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:ayn3/Volunteer/dashboardV/homev.dart';
+import 'package:provider/provider.dart';
 
+import '../../controller/controller.dart';
 import '../Gellery/library.dart';
 
 class VolTask extends StatefulWidget {
@@ -22,8 +24,9 @@ class VolTaskState extends State<VolTask> {
   @override
   Widget build(BuildContext context) {
     print("hi");
+    var pro = Provider.of<Controller>(context);
     return Padding(
-      padding: const EdgeInsets.only(right: 25.0),
+      padding: const EdgeInsets.only(right: 15.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Container(
@@ -50,11 +53,11 @@ class VolTaskState extends State<VolTask> {
                             setState(() {
                               homepagev.pressed = true;
                               homepagev.TaskIndex = widget.TaskPage;
-                              navbar.selectedIndexPage = 1;
+                              pro.changeIndex(widget.TaskPage);
                             });
                           },
                           child: Text(widget.TaskName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: color_DarkGray,
                                   fontSize: 15,
                                   fontFamily: "PNU",

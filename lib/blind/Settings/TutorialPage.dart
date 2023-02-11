@@ -12,41 +12,36 @@ class TutorialPageState extends State<TutorialPage> {
     return settingsPageState.indexSettings == 0
         ? settingsPage()
         : Container(
-            padding: EdgeInsets.all(25),
+            padding: EdgeInsets.only(top: 60, right: 20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Row(
-                  children: [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            alignment: Alignment.topRight,
-                            primary: Colors.white,
-                            onPrimary: Colors.black,
-                            shadowColor: null,
-                            side: const BorderSide(
-                                color: Colors.white, width: 0)),
-                        onPressed: (() => setState(() {
-                              settingsPageState.indexSettings = 0;
-                            })),
-                        child: const Icon(Icons.arrow_back_ios)),
-                  ],
-                ),
-                Container(
-                  alignment: Alignment.bottomRight,
-                  child: const Text(
-                    " كيف استخدم التطبيق ؟ ",
-                    style: TextStyle(
-                        fontFamily: "PNU",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 28),
-                    textAlign: TextAlign.right,
+                IconButton(
+
+                alignment: Alignment.topRight,
+                icon: const Icon(Icons.arrow_back_ios),
+                onPressed: (() => setState(() {
+                  settingsPageState.indexSettings = 0;
+                })),
                   ),
+                SizedBox(height: 10,),
+                Container(
+
+
+                  child: const Text(
+                    "كيف استخدم التطبيق ؟",
+                    textAlign: TextAlign.right,
+                      style: TextStyle(
+                          fontSize: 28,
+                          fontFamily: "PNU",
+                          fontWeight: FontWeight.bold)),
                 ),
                 SizedBox(
                   height: 30,
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Text(
                       textAlign: TextAlign.right,
@@ -56,22 +51,23 @@ class TutorialPageState extends State<TutorialPage> {
                           fontWeight: FontWeight.w200,
                           fontSize: 25),
                     ),
+                    SizedBox(height: 20,),
                     Text(
-                      "- شاركنا رابط التغريدة للصورة التي ترغب في وصفها",
+                      "1- شاركنا رابط التغريدة للصورة التي ترغب في وصفها",
                       style: TextStyle(
                           fontFamily: "PNU",
                           fontWeight: FontWeight.w200,
                           fontSize: 15),
                     ),
                     Text(
-                      "- تلقائياً سيظهر لك وصف الصورة التي شاركتها ، يمكنك اعاده سماع الوصف مره أخرى أو سماع وصف اضافي للصورة من قبل المتطوعين المبصرين  ",
+                      "2- تلقائياً سيظهر لك وصف الصورة التي شاركتها ، يمكنك إعادة سماع الوصف مره أخرى أو سماع وصف إضافي للصورة من قبل المتطوعين المبصرين",
                       style: TextStyle(
                           fontFamily: "PNU",
                           fontWeight: FontWeight.w200,
                           fontSize: 15),
                     ),
                     Text(
-                      "- يمكنك من قائمة الاعدادات تحديد كيف ترغب ان يظهر لك وصف الصور بإختيار أحد الخيارين الوصف الأعلى تقييما أو الوصف الأطول",
+                      "3- يمكنك من قائمة الإعدادات تحديد إعدادات الصوت ",
                       style: TextStyle(
                           fontFamily: "PNU",
                           fontWeight: FontWeight.w200,

@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:ayn3/blind/Settings/ReportPage.dart';
+import 'package:ayn3/contsants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'VoiceSett.dart';
@@ -23,14 +24,27 @@ class settingsPageState extends State<settingsPage> {
       children: [
         indexSettings == 0
             ? Align(
+
+
                 child: Container(
+
                   child: ListView(
-                    padding: EdgeInsets.all(24),
+
+                    padding: EdgeInsets.only(top: 20, right: 20),
                     children: [
+                      SizedBox(height: 60,),
+                      Text("الإعدادات " ,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontFamily: "PNU",
+                              fontWeight: FontWeight.bold)),
                       SettingsGroup(
+
                           titleTextStyle:
-                              TextStyle(fontSize: 28, fontFamily: "PNU"),
+                              TextStyle(fontSize: 28, fontFamily: "PNU",),
                           title: "الدعم الفني",
+
                           children: [buildTutorial(), BuildReport()]),
                       SettingsGroup(
                           titleTextStyle:
@@ -60,7 +74,7 @@ class settingsPageState extends State<settingsPage> {
     return SimpleSettingsTile(
         titleTextStyle: const TextStyle(fontSize: 15, fontFamily: "PNU"),
         title: " كيف استخدم التطبيق؟",
-        leading: const Icon(Icons.abc),
+        leading: const Icon(Icons.help_rounded, color: color_purple,),
         onTap: () {
           setState(() {
             indexSettings = 1;
@@ -72,7 +86,7 @@ class settingsPageState extends State<settingsPage> {
     return SimpleSettingsTile(
         titleTextStyle: const TextStyle(fontSize: 15, fontFamily: "PNU"),
         title: " شاركنا رأيك",
-        leading: const Icon(Icons.abc),
+        leading: const Icon(Icons.email_rounded, color: color_purple),
         onTap: () {
           setState(() {
             indexSettings = 2;
@@ -84,7 +98,7 @@ class settingsPageState extends State<settingsPage> {
     return SimpleSettingsTile(
         titleTextStyle: const TextStyle(fontSize: 15, fontFamily: "PNU"),
         title: "قراءة الوصف",
-        leading: const Icon(Icons.abc),
+        leading: const Icon(Icons.record_voice_over, color: color_purple),
         onTap: () {
           setState(() {
             indexSettings = 3;
