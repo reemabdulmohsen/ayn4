@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "840761135635",
+    "firebase_url": "https://ayn2023-a346d-default-rtdb.firebaseio.com",
+    "project_id": "ayn2023-a346d",
+    "storage_bucket": "ayn2023-a346d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840761135635:android:2ee8e15bcc81b527c3e5e6",
+        "android_client_info": {
+          "package_name": "com.example.ayn3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "840761135635-2th2iipesf7gp5i1uk0j3ck6t803adnb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmoZb1CfIgr0qddwhnfw_zAmU_m8Nn4gw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "840761135635-2th2iipesf7gp5i1uk0j3ck6t803adnb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "840761135635-okvc27rp1gaq7atmgb6af8bk0uvtkd2m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ayn3"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
