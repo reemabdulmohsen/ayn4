@@ -1,10 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, use_key_in_widget_constructors
 
-import 'package:ayn3/Volunteer/AddImages/addimage.dart';
-import 'package:ayn3/Volunteer/GetData.dart';
 import 'package:ayn3/contsants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 
 import 'EditImage.dart';
 

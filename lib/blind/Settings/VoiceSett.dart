@@ -1,127 +1,125 @@
 import 'package:ayn3/blind/Settings/settings.dart';
 import 'package:ayn3/blind/descPage.dart';
+import 'package:ayn3/contsants.dart';
 import 'package:flutter/material.dart';
 
 class VoiceSett extends StatefulWidget {
+  static sonudSpeed? speed = sonudSpeed.slow;
   @override
   State<VoiceSett> createState() => VoiceSettPage();
 }
 
+enum sonudSpeed { fast , slow, medium }
+
+
+
 class VoiceSettPage extends State<VoiceSett> {
   double currentValue = 0;
-  int _value = 1;
+
+
   @override
   Widget build(BuildContext context) {
     return settingsPageState.indexSettings == 0
         ? settingsPage()
         : Container(
-            padding: EdgeInsets.all(25),
+            padding: EdgeInsets.only(top: 60, right: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            alignment: Alignment.topRight,
-                            primary: Colors.white,
-                            onPrimary: Colors.black,
-                            shadowColor: null,
-                            side: const BorderSide(
-                                color: Colors.white, width: 0)),
-                        onPressed: (() => setState(() {
-                              settingsPageState.indexSettings = 0;
-                            })),
-                        child: const Icon(Icons.arrow_back_ios)),
-                  ],
+                IconButton(
+                  alignment: Alignment.topRight,
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: (() => setState(() {
+                        settingsPageState.indexSettings = 0;
+                      })),
                 ),
                 const Text(
                   "إعدادات قراءة الوصف",
+                  textAlign: TextAlign.right,
                   style: TextStyle(
-                      fontFamily: "PNU",
-                      fontWeight: FontWeight.w900,
-                      fontSize: 30),
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "PNU",
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 const Text(
                   "معدل سرعة الصوت",
                   style: TextStyle(
                       fontFamily: "PNU",
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25),
+                      fontWeight: FontWeight.normal,
+                      fontSize: 20),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 50,
-                      child: Icon(Icons.minimize_rounded),
-                    ),
-                    Slider(
-
-                        value: MyDescPage.volume,
-                        onChanged: (newVolume) {
-                          setState(() => MyDescPage.volume = newVolume);
-                        },
-                        min: 0.0,
-                        max: 1.0,
-                        divisions: 10,
-
-                    ),
-                    Container(
-                      height: 40,
-                      child: Icon(Icons.add),
-                    ),
-                  ],
-                ),
-                Divider(
-                  thickness: 3,
-                  color: Colors.grey,
-                ),
-                const Text("الصوت",
-                    style: TextStyle(
-                        fontFamily: "PNU",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25)),
                 Column(
                   children: [
-                    Row(
-                      children: [
-                        Radio(
-                          value: _value,
-                          groupValue: _value,
-                          onChanged: (value) {},
-                          fillColor: MaterialStateColor.resolveWith(
-                              (states) => Colors.lightBlue),
-                        ),
-                        SizedBox(
-                          width: 10.0,
-                        ),
-                        Text("ذكر",
-                            style: TextStyle(
-                                fontFamily: "PNU",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20))
-                      ],
+                    ListTile(
+                      selectedTileColor: color_purple,
+
+                      title: const Text('سريع',style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "PNU",
+                      )),
+                      leading: Radio(
+                          fillColor: MaterialStateColor.resolveWith((states) => color_purple),
+                          focusColor: MaterialStateColor.resolveWith((states) =>  color_purple),
+                          value: sonudSpeed.fast,
+                          groupValue:   VoiceSett.speed,
+                          onChanged: (value) {
+                            setState(() {
+                              VoiceSett.speed = value;
+                            });
+                          }),),
+
+                    ListTile(
+                      selectedTileColor: color_purple,
+                      focusColor: color_purple,
+                      title: const Text('متوسط',style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "PNU",
+                      ),),
+                      leading: Radio(
+                          fillColor: MaterialStateColor.resolveWith((states) => color_purple),
+                          focusColor: MaterialStateColor.resolveWith((states) =>  color_purple),
+                          value: sonudSpeed.medium,
+                          groupValue: VoiceSett.speed,
+                          onChanged: (value) {
+
+                            setState(() {
+                             VoiceSett.speed = value;
+                            });
+                          }),
                     ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 2,
-                          groupValue: _value,
-                          onChanged: (value) {},
-                        ),
-                        SizedBox(
-                          width: 10.0,
-                        ),
-                        Text("أنثى",
-                            style: TextStyle(
-                                fontFamily: "PNU",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20))
-                      ],
-                    )
+                    ListTile(
+                      selectedTileColor: color_purple,
+                      focusColor: color_purple,
+                      title: const Text('بطيء',style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "PNU",
+                      ),),
+                      leading: Radio(
+                          fillColor: MaterialStateColor.resolveWith((states) => color_purple),
+                          focusColor: MaterialStateColor.resolveWith((states) =>  color_purple),
+                          value: sonudSpeed.slow,
+                          groupValue:   VoiceSett.speed,
+                          onChanged: (value) {
+
+                            setState(() {
+                              VoiceSett.speed = value;
+                            });
+                          }),
+                    ),
                   ],
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+
               ],
             ));
   }

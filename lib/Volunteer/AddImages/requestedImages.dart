@@ -31,16 +31,15 @@ class _RequestedImageState extends State<RequestedImage> {
         .collection("desc")
         .get()
         .then((value) {
-      value.docs.forEach((element) {
-        print(element.data().isEmpty);
+          value.docs.forEach((element) {
         if(element.data()['ListOfUser'].isEmpty){
 
           setState(() {
             imagesID.add(element);
+
           });
 
         }else {
-          print("hiiiiii2");
           element['ListOfUser'].forEach((val) {
             if (val['UserID'].contains(FirebaseAuth.instance.currentUser!.uid) && element.data()['ListOfUser'].isNotEmpty) {
               return;

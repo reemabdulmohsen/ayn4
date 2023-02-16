@@ -8,7 +8,11 @@ class EditImage extends StatefulWidget {
   String ImagePath;
   String desc;
   String ID;
-  EditImage({super.key , required this.ImagePath , required this.desc , required this.ID});
+  EditImage(
+      {super.key,
+      required this.ImagePath,
+      required this.desc,
+      required this.ID});
 
   @override
   State<EditImage> createState() => _EditImageState();
@@ -16,9 +20,8 @@ class EditImage extends StatefulWidget {
 
 class _EditImageState extends State<EditImage> {
   TextEditingController _textFieldController = TextEditingController();
-  late String valueText;
+  late String valueText = '';
   String codeDialog = "لا يوجد وصف";
-
 
   Future<void> EditDescription(BuildContext context) async {
     return showDialog(
@@ -42,26 +45,45 @@ class _EditImageState extends State<EditImage> {
               ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(color_purple)),
-                child: Text(
+                child: const Text(
                   'حفظ',
                   style: TextStyle(fontFamily: "PNU", color: Colors.white),
                 ),
                 onPressed: () {
-                  print("ggggg");
-                  _updateDESC();
-                  setState(() {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                        'تم حفظ الوصف',
-                        style:
-                            TextStyle(fontFamily: "PNU", color: Colors.white),
-                      ),
-                      duration: Duration(seconds: 6),
-                      backgroundColor: Colors.green[600]!,
-                    ));
-                    codeDialog = valueText;
-                    Navigator.pop(context);
-                  });
+                  try {
+                    if(_textFieldController.text.isEmpty){
+                      throw ("Value is empty");
+                    }
+                    _updateDESC();
+                    setState(() {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: const Text(
+                          'تم حفظ الوصف',
+                          style:
+                              TextStyle(fontFamily: "PNU", color: Colors.white),
+                        ),
+                        duration: const Duration(seconds: 6),
+                        backgroundColor: Colors.green[600]!,
+                      ));
+                      codeDialog = valueText;
+                      Navigator.pop(context);
+                    });
+                  } catch (e) {
+
+                    setState(() {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: const Text(
+                          'لا يوجد وصف مدخل',
+                          style:
+                          TextStyle(fontFamily: "PNU", color: Colors.white),
+                        ),
+                        duration: const Duration(seconds: 6),
+                        backgroundColor: Colors.red[900],
+                      ));
+
+
+                    });
+                  }
                 },
               ),
             ],
@@ -74,7 +96,7 @@ class _EditImageState extends State<EditImage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(
+            title: const Text(
               "هل انت متأكد من حذف الوصف؟",
               style: TextStyle(fontFamily: "PNU", color: Colors.black),
             ),
@@ -84,8 +106,9 @@ class _EditImageState extends State<EditImage> {
                   backgroundColor: MaterialStateProperty.all(Colors.red[900]),
                 ),
                 onPressed: () {
+                  _delete();
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text(
                       'تم حذف الوصف',
                       style: TextStyle(fontFamily: "PNU", color: Colors.white),
@@ -121,6 +144,7 @@ class _EditImageState extends State<EditImage> {
     codeDialog = widget.desc;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,8 +156,9 @@ class _EditImageState extends State<EditImage> {
           children: [
             const SizedBox(
               height: 50,
-            ), IconButton(
-              padding: EdgeInsets.only(right: 30),
+            ),
+            IconButton(
+              padding: const EdgeInsets.only(right: 30),
               alignment: Alignment.topRight,
               icon: const Icon(Icons.arrow_back_ios),
               onPressed: () => {Navigator.pop(context)},
@@ -169,10 +194,11 @@ class _EditImageState extends State<EditImage> {
                             color: Colors.blueGrey[50],
                             borderRadius: BorderRadius.circular(60)),
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Text(
                             codeDialog,
-                            style: TextStyle(fontFamily: "PNU", fontSize: 15),
+                            style: const TextStyle(
+                                fontFamily: "PNU", fontSize: 15),
                           ),
                         ),
                       ),
@@ -215,13 +241,13 @@ class _EditImageState extends State<EditImage> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25.0),
                         gradient: LinearGradient(
-                          begin: Alignment(-0.95, 0.0),
-                          end: Alignment(1.0, 0.0),
+                          begin: const Alignment(-0.95, 0.0),
+                          end: const Alignment(1.0, 0.0),
                           colors: [
-                            Color.fromARGB(255, 155, 0, 0),
+                            const Color.fromARGB(255, 155, 0, 0),
                             Colors.red[900]!
                           ],
-                          stops: [0.0, 1.0],
+                          stops: const [0.0, 1.0],
                         ),
                       ),
                       child: ElevatedButton(
@@ -247,14 +273,58 @@ class _EditImageState extends State<EditImage> {
       )),
     );
   }
+
   void _updateDESC() async {
-    print('******************');
-   await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection("User")
-        .doc(FirebaseAuth.instance.currentUser!.uid).collection('desc').doc(widget.ID)
-        .set(
-    {"desc":_textFieldController.text.trim() },SetOptions(merge: true));
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('desc')
+        .doc(widget.ID)
+        .set({"desc": _textFieldController.text.trim()},
+            SetOptions(merge: true));
     homepagev.DescNum = homepagev.DescNum + 1;
+  }
+
+  void _delete() async {
+    List list = [];
+
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance
+        .collection("User")
+        .doc(uid)
+        .collection('desc')
+        .doc(widget.ID)
+        .delete();
+
+    await FirebaseFirestore.instance
+        .collection("User")
+        .doc("AI")
+        .collection('desc')
+        .doc(widget.ID)
+        .get()
+        .then((value) {
+      list = value['ListOfUser'];
+    });
+    for (int i = 0; i < list.length; i++) {
+      print(list[i]['UserID']);
+      print(uid);
+      if (list[i]['UserID'] == uid) {
+        print(list.remove(list[i]));
+      }
+    }
+
+    await FirebaseFirestore.instance
+        .collection("User")
+        .doc('AI')
+        .collection('desc')
+        .doc(widget.ID)
+        .set({"ListOfUser": list}, SetOptions(merge: true));
+    homepagev.DescNum = homepagev.DescNum - 1;
+
+    FirebaseFirestore.instance
+        .collection("User")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({"desc_num": homepagev.DescNum});
   }
 }
 

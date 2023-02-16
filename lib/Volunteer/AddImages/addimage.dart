@@ -2,7 +2,6 @@ import 'package:ayn3/contsants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ayn3/Volunteer/GetData.dart';
 import 'package:ayn3/Volunteer/dashboardV/homev.dart';
 
 
@@ -30,7 +29,7 @@ class _AddImageState extends State<AddImage> {
               height: 50,
             ),
             IconButton(
-              padding: EdgeInsets.only(right: 30),
+              padding: const EdgeInsets.only(right: 30),
               alignment: Alignment.topRight,
               icon: const Icon(Icons.arrow_back_ios),
               onPressed: () => {Navigator.pop(context)},
@@ -54,7 +53,7 @@ class _AddImageState extends State<AddImage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(decoration: BoxDecoration(
+                  Container(decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(40))
               ),
                       margin: const EdgeInsets.only(bottom: 30),
@@ -104,7 +103,7 @@ class _AddImageState extends State<AddImage> {
                               MaterialStateProperty.all(Colors.transparent),
                           shadowColor:
                               MaterialStateProperty.all(Colors.transparent)),
-                      onPressed: () => addDescinDB(_desc.text.trim(), widget.link),
+                      onPressed: () => addDescriptioninDB(_desc.text.trim(), widget.link),
                       child: const Text(
                         "اضافة الوصف",
                         style:
@@ -121,26 +120,38 @@ class _AddImageState extends State<AddImage> {
     );
   }
 
-  addDescinDB(String desc, String link) async {
+  addDescriptioninDB(String desc, String link) async {
+
+    List listOfuser = [];
 
     try {
 
       if((desc == "" )| (desc == null)){
-        throw new CustomException('لا يوجد وصف ');
+        throw CustomException('لا يوجد وصف ');
       }
 
       final userid = await FirebaseAuth.instance.currentUser!.uid;
-      String docId = FirebaseFirestore.instance
-          .collection('User').doc(userid).collection("desc").doc()
-          .id;
+      //add the desc to the user
       await FirebaseFirestore.instance.collection('User').doc(
-          userid).collection("desc").doc(docId).set(
-          {"desc": desc, "link": link , "id": docId });
+          userid).collection("desc").doc(widget.id).set(
+          {"desc": desc, "link": link , "id": widget.id });
 
+
+      //get the list
+      await FirebaseFirestore.instance.collection('User').doc(
+          "AI").collection("desc").doc(widget.id).get().then((element){
+
+        listOfuser =  element["ListOfUser"];
+      });
+
+      // update the list
+      listOfuser.add({"UserID" :userid , "UserDesc": desc});
+
+      // update the list in firebase
       await FirebaseFirestore.instance.collection('User').doc(
           "AI").collection("desc").doc(widget.id).set(
-          {"ListOfUser" : [{"UserID" :userid , "UserDesc": desc}]},SetOptions(merge: true),);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          {"ListOfUser" : listOfuser },SetOptions(merge: true),);
+       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
           "تم اضافة الوصف بنجاح!",
           textAlign: TextAlign.left,
@@ -167,14 +178,11 @@ class _AddImageState extends State<AddImage> {
 
   }
   void _updataDescNum() async {
-    print("object");
-
     FirebaseFirestore.instance
         .collection("User")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({"desc_num": homepagev.DescNum + 1});
     homepagev.DescNum = homepagev.DescNum + 1;
-    print("object2");
   }
 
 }

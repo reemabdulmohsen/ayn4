@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'ImageBox.dart';
 
 class RatePage extends StatefulWidget {
@@ -66,7 +67,10 @@ class _RatePageState extends State<RatePage> {
                           );
                         });
                   } else {
-                    return CircularProgressIndicator();
+                    return Center(
+                      child: Lottie.network(
+                          "https://assets7.lottiefiles.com/packages/lf20_rwq6ciql.json"),
+                    );
                   }
                 }
             )),

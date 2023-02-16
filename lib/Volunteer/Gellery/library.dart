@@ -1,10 +1,8 @@
 // ignore_for_file: camel_case_types
-import 'package:ayn3/Volunteer/GetData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
+import 'package:lottie/lottie.dart';
 import 'Images.dart';
 
 class libraryPage extends StatefulWidget {
@@ -74,7 +72,10 @@ class _libraryPagState extends State<libraryPage> {
                           );
                         });
                   } else {
-                    return CircularProgressIndicator();
+                    return Center(
+                      child: Lottie.network(
+                          "https://assets7.lottiefiles.com/packages/lf20_rwq6ciql.json"),
+                    );
                   }
                 }
             )),

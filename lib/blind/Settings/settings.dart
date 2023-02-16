@@ -20,53 +20,64 @@ class settingsPageState extends State<settingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        indexSettings == 0
-            ? Align(
+    return Scaffold(
+      body: Stack(
+        children: [
+          indexSettings == 0
+              ? Align(
 
-
-                child: Container(
-
-                  child: ListView(
-
-                    padding: EdgeInsets.only(top: 20, right: 20),
-                    children: [
-                      SizedBox(height: 60,),
-                      Text("الإعدادات " ,
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              fontSize: 30,
+                  child: Container(
+                    child: ListView(
+                      padding: EdgeInsets.only(top: 20, right: 20),
+                      children: [ Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: IconButton(
+                          padding: EdgeInsets.only(right: 30),
+                          alignment: Alignment.topRight,
+                          icon: const Icon(Icons.arrow_back_ios),
+                          onPressed: () => {Navigator.pop(context)},
+                        ),
+                      ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Text("الإعدادات ",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontFamily: "PNU",
+                                fontWeight: FontWeight.bold)),
+                        SettingsGroup(
+                            titleTextStyle: TextStyle(
+                              fontSize: 28,
                               fontFamily: "PNU",
-                              fontWeight: FontWeight.bold)),
-                      SettingsGroup(
-
-                          titleTextStyle:
-                              TextStyle(fontSize: 28, fontFamily: "PNU",),
-                          title: "الدعم الفني",
-
-                          children: [buildTutorial(), BuildReport()]),
-                      SettingsGroup(
-                          titleTextStyle:
-                              TextStyle(fontSize: 28, fontFamily: "PNU"),
-                          title: "اعدادت قراءة الوصف",
-                          children: [VoiceSettFunc()])
-                    ],
+                            ),
+                            title: "الدعم الفني",
+                            children: [buildTutorial(), BuildReport()]),
+                        SettingsGroup(
+                            titleTextStyle:
+                                TextStyle(fontSize: 28, fontFamily: "PNU"),
+                            title: "اعدادت قراءة الوصف",
+                            children: [VoiceSettFunc()])
+                      ],
+                    ),
                   ),
-                ),
-              )
-            : indexSettings == 1
-                ? Scaffold(
-                    body: TutorialPage(),
-                  )
-                : indexSettings == 2
-                    ? Scaffold(
-                        body: ReportPage(),
-                      )
-                    : indexSettings == 3
-                        ? VoiceSett()
-                        : Container()
-      ],
+                )
+              : indexSettings == 1
+                  ? Scaffold(
+                      body: TutorialPage(),
+                    )
+                  : indexSettings == 2
+                      ? Scaffold(
+                          body: ReportPage(),
+                        )
+                      : indexSettings == 3
+                          ? Scaffold(
+                              body: VoiceSett(),
+                            )
+                          : Container()
+        ],
+      ),
     );
   }
 
@@ -74,7 +85,10 @@ class settingsPageState extends State<settingsPage> {
     return SimpleSettingsTile(
         titleTextStyle: const TextStyle(fontSize: 15, fontFamily: "PNU"),
         title: " كيف استخدم التطبيق؟",
-        leading: const Icon(Icons.help_rounded, color: color_purple,),
+        leading: const Icon(
+          Icons.help_rounded,
+          color: color_purple,
+        ),
         onTap: () {
           setState(() {
             indexSettings = 1;

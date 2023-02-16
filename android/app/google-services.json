@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:840761135635:android:2ee8e15bcc81b527c3e5e6",
         "android_client_info": {
-          "package_name": "com.example.ayn3"
+          "package_name": "com.AYN.AYN3"
         }
       },
       "oauth_client": [
@@ -35,7 +35,7 @@
               "client_id": "840761135635-okvc27rp1gaq7atmgb6af8bk0uvtkd2m.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.ayn3"
+                "bundle_id": "com.AYN.AYN3"
               }
             }
           ]

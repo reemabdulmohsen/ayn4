@@ -103,9 +103,9 @@ class homepagevState extends State<homepagev> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text("أهلا " + name!,
+                     Text("أهلا " + name!,
                         textAlign: TextAlign.right,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 30,
                             fontFamily: "PNU",
                             fontWeight: FontWeight.bold))
